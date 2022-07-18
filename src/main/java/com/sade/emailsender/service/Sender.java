@@ -1,6 +1,8 @@
 package com.sade.emailsender.service;
 
+import com.sade.emailsender.dto.EmailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -12,20 +14,25 @@ public class Sender {
     @Autowired
     private JavaMailSender mailSender;
 
+    /**
+     * Get email from application.properties
+     */
+    @Value("${spring.mail.username}")
+    private String emailFrom;
 
-    public void sendEmail(String toEmail,
-                          String subject,
-                          String body){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("hinancguney@gmail.com");
-        message.setTo(toEmail);
-        message.setText(body);
-        message.setSubject(subject);
+    public SimpleMailMessage setSimpleMailMessage(EmailTemplate emailTemplate) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(emailFrom);
+        simpleMailMessage.setTo(emailTemplate.to);
+        simpleMailMessage.setText(emailTemplate.body);
+        simpleMailMessage.setSubject(emailTemplate.subject);
 
-        mailSender.send(message);
+        return simpleMailMessage;
+    }
+
+    public void sendEmail(SimpleMailMessage simpleMailMessage) {
+        mailSender.send(simpleMailMessage);
         System.out.println("Mail sent succesfuly...");
-
-
     }
 
 }
