@@ -2,6 +2,7 @@ package com.sade.emailsender;
 
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sade.emailsender.dto.EmailTemplate;
 import com.sade.emailsender.service.FileReader;
 import com.sade.emailsender.service.Sender;
@@ -12,6 +13,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +30,17 @@ public class EmailSenderApplication {
         SpringApplication.run(EmailSenderApplication.class, args);
     }
 
+    /**
+     * forEach turns every email template in emailTemplates list. And it sends every email message step by step.
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void sendmail() {
-        String jsonString = fileReader.readFile();
-        Gson g = new Gson();
-        ArrayList<EmailTemplate> emailTemplates = g.fromJson(jsonString, ArrayList.class);
+        String data = fileReader.readFile();
+        List<EmailTemplate> emailTemplates = fileReader.stringToEmailTemplates(data);
 
-
+        emailTemplates.forEach(emailTemplate -> {
+            SimpleMailMessage simpleMailMessage = sender.setSimpleMailMessage(emailTemplate);
+            sender.sendEmail(simpleMailMessage);
+        });
     }
 }
