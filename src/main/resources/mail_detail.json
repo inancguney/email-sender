@@ -1,5 +1,12 @@
-{
-  "to": "hinancguney@gmail.com",
-  "subject": "EmailSender",
-  "body": "Merhaba, Email sender çalışıyor. Bu maili onunla yolluyorum."
-}
+[
+  {
+    "to": "tamercankacak@gmail.com",
+    "subject": "EmailSender",
+    "body": "Merhaba, Email sender çalışıyor. Bu maili tamercankacak'a yolluyorum."
+  },
+  {
+    "to": "hinancguney@gmail.com",
+    "subject": "EmailSender",
+    "body": "Merhaba, Email sender çalışıyor. Bu hinancguney'e  yolluyorum."
+  }
+]
