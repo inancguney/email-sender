@@ -1,8 +1,8 @@
 package com.sade.emailsender;
 
 
-
 import com.sade.emailsender.dto.BulkMail;
+import com.sade.emailsender.dto.EmailTemplate;
 import com.sade.emailsender.service.FileReader;
 import com.sade.emailsender.service.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,18 @@ public class EmailSenderApplication {
     public void sendmail() {
 
         String data = fileReader.readFileFrom_maildetail();
-        List<BulkMail> bulkMails = fileReader.stringToBulkMail(data);
+        BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
-        bulkMails.forEach(bulkMail -> {
-            SimpleMailMessage simpleMailMessage = sender.setSimpleMailMessage(bulkMail);
+        bulkMail.to.forEach(to -> {
+            EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body.replace("%isim%", to));
+            SimpleMailMessage simpleMailMessage = sender.setSimpleMailMessage(emailTemplate);
             sender.sendEmail(simpleMailMessage);
         });
+
+
         /*
          * TODO: read file from mail_otosend.json
          *  send email*/
-        }
     }
+}
 

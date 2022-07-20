@@ -41,10 +41,8 @@ public class FileReader {
         List<EmailTemplate> emailTemplates = new Gson().fromJson(data, listType);
         return emailTemplates;
     }*/
-    public List<BulkMail> stringToBulkMail(String data){
-        Type listType = new TypeToken<ArrayList<BulkMail>>() {
-        }.getType();
-        List<BulkMail> bulkMails = new Gson().fromJson(data, listType);
+    public BulkMail stringToBulkMail(String data){
+        BulkMail bulkMails = new Gson().fromJson(data, BulkMail.class);
         return bulkMails;
     }
 

@@ -21,12 +21,12 @@ public class Sender {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
-    public SimpleMailMessage setSimpleMailMessage(BulkMail bulkMail) {
+    public SimpleMailMessage setSimpleMailMessage(EmailTemplate emailTemplate) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(emailFrom);
-        simpleMailMessage.setTo(String.valueOf(bulkMail.to));
-        simpleMailMessage.setText(bulkMail.body);
-        simpleMailMessage.setSubject(bulkMail.subject);
+        simpleMailMessage.setTo(String.valueOf(emailTemplate.to));
+        simpleMailMessage.setText(emailTemplate.body);
+        simpleMailMessage.setSubject(emailTemplate.subject);
 
         return simpleMailMessage;
     }
