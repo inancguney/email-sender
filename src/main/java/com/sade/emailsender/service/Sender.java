@@ -1,5 +1,6 @@
 package com.sade.emailsender.service;
 
+import com.sade.emailsender.dto.BulkMail;
 import com.sade.emailsender.dto.EmailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +21,12 @@ public class Sender {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
-    public SimpleMailMessage setSimpleMailMessage(EmailTemplate emailTemplate) {
+    public SimpleMailMessage setSimpleMailMessage(BulkMail bulkMail) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(emailFrom);
-        simpleMailMessage.setTo(emailTemplate.to);
-        simpleMailMessage.setText(emailTemplate.body);
-        simpleMailMessage.setSubject(emailTemplate.subject);
+        simpleMailMessage.setTo(String.valueOf(bulkMail.to));
+        simpleMailMessage.setText(bulkMail.body);
+        simpleMailMessage.setSubject(bulkMail.subject);
 
         return simpleMailMessage;
     }
