@@ -1,8 +1,6 @@
 package com.sade.emailsender;
 
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.sade.emailsender.dto.EmailTemplate;
 import com.sade.emailsender.service.FileReader;
 import com.sade.emailsender.service.Sender;
@@ -13,8 +11,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,12 +31,9 @@ public class EmailSenderApplication {
      */
     @EventListener(ApplicationReadyEvent.class)
     public void sendmail() {
-        String data = fileReader.readFile();
-        List<EmailTemplate> emailTemplates = fileReader.stringToEmailTemplates(data);
 
-        emailTemplates.forEach(emailTemplate -> {
-            SimpleMailMessage simpleMailMessage = sender.setSimpleMailMessage(emailTemplate);
-            sender.sendEmail(simpleMailMessage);
-        });
+        /*
+        * TODO: read file from mail_otosend.json
+        *  send email*/
     }
 }

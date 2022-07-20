@@ -1,0 +1,9 @@
+{
+  "subject": "subject",
+  "body": "Merhaba %isim%. Bu mesaj otomatik gönderilmiştir.",
+  "to": [
+    "tamercankacak@gmail.com",
+    "hinancguney@gmail.com",
+    "tamer.kacak@sadeyazilim.com"
+  ]
+}

@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @Component
 public class FileReader {
-    public String readFile() {
+    public String readFileFrom_maildetail() {
         try {
 
             FileInputStream fis = new FileInputStream("src/main/resources/mail_detail.json");
@@ -26,6 +26,8 @@ public class FileReader {
             throw new IllegalArgumentException("Illegal Argument");
         }
     }
+
+    //TODO: readFileFrom_mailotosend
 
     /**
      * This method converts string data to email templates as list.
@@ -38,4 +40,7 @@ public class FileReader {
         List<EmailTemplate> emailTemplates = new Gson().fromJson(data, listType);
         return emailTemplates;
     }
+
+    // TODO: stringToBulkMail
+
 }
