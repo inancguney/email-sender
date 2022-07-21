@@ -1,6 +1,7 @@
 package com.sade.emailsender;
 
 
+
 import com.sade.emailsender.dto.BulkMail;
 import com.sade.emailsender.dto.EmailTemplate;
 import com.sade.emailsender.service.FileReader;
@@ -42,11 +43,9 @@ public class EmailSenderApplication {
             SimpleMailMessage simpleMailMessage = sender.setSimpleMailMessage(emailTemplate);
             sender.sendEmail(simpleMailMessage);
         });
-
-
         /*
          * TODO: read file from mail_otosend.json
          *  send email*/
+        }
     }
-}
 
