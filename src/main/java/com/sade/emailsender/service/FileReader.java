@@ -1,25 +1,20 @@
 package com.sade.emailsender.service;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.sade.emailsender.dto.BulkMail;
-import com.sade.emailsender.dto.EmailTemplate;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Component
 public class FileReader {
-    public String readFileFrom_maildetail() {
+    public String readFile(String path) {
         try {
 
-            FileInputStream fis = new FileInputStream("src/main/resources/mail_otosend.json");
+            FileInputStream fis = new FileInputStream(String.format("src/main/resources/%s", path));
             String data = IOUtils.toString(fis, "UTF-8");
             return data;
         } catch (Exception e) {
@@ -32,6 +27,7 @@ public class FileReader {
 
     /**
      * This method converts string data to email templates as list.
+     *
      * @param data it is data from mail_detail.json which is string.
      * @return it is converted email templates as list.
      */
@@ -41,7 +37,7 @@ public class FileReader {
         List<EmailTemplate> emailTemplates = new Gson().fromJson(data, listType);
         return emailTemplates;
     }*/
-    public BulkMail stringToBulkMail(String data){
+    public BulkMail stringToBulkMail(String data) {
         BulkMail bulkMails = new Gson().fromJson(data, BulkMail.class);
         return bulkMails;
     }

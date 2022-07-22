@@ -13,8 +13,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 
-
-import java.util.List;
+import javax.mail.internet.MimeMessage;
 
 
 @SpringBootApplication
@@ -33,15 +32,16 @@ public class EmailSenderApplication {
      * forEach turns every email template in emailTemplates list. And it sends every email message step by step.
      */
     @EventListener(ApplicationReadyEvent.class)
-    public void sendmail() {
+    public void sendmail(){
 
-        String data = fileReader.readFileFrom_maildetail();
+        String data = fileReader.readFile("mail_otosend.json");
+        String template = fileReader.readFile("template.html");
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body.replace("%isim%", to));
-            SimpleMailMessage simpleMailMessage = sender.setSimpleMailMessage(emailTemplate);
-            sender.sendEmail(simpleMailMessage);
+            MimeMessage mimeMessage = sender.setMimeMailMessage(emailTemplate,template);
+            sender.sendHtmlMail(mimeMessage);
         });
         /*
          * TODO: read file from mail_otosend.json
