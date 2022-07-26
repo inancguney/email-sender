@@ -42,7 +42,7 @@ public class EmailSenderApplication {
 
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body.replace("%isim%", to));
-             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template1);
+             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template1,"files/unnamed.png");
             sender.sendHtmlMail(mimeMessage);
         });
         /*

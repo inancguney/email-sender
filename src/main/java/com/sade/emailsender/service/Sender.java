@@ -63,13 +63,13 @@ public class Sender {
 //        return message;
 //    }
     @SneakyThrows
-    public MimeMessage setSimpleMailMessage(EmailTemplate emailTemplate,String template){
+    public MimeMessage setSimpleMailMessage(EmailTemplate emailTemplate,String template, String fileName){
         MimeMessage mimeMailMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage,true,"UTF-8");
         mimeMessageHelper.setFrom(emailFrom);
         mimeMessageHelper.setTo(emailTemplate.to);
         mimeMessageHelper.setSubject(emailTemplate.subject);
-        mimeMessageHelper.addAttachment(template, new ClassPathResource(template));
+        mimeMessageHelper.addAttachment(fileName, new ClassPathResource(fileName));
         mimeMessageHelper.setText(template,true);
         return mimeMailMessage;
     }
