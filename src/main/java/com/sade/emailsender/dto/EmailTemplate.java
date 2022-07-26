@@ -15,4 +15,5 @@ public class EmailTemplate {
     public String subject;
     public String body;
 
+
 }

@@ -69,7 +69,7 @@ public class Sender {
         mimeMessageHelper.setFrom(emailFrom);
         mimeMessageHelper.setTo(emailTemplate.to);
         mimeMessageHelper.setSubject(emailTemplate.subject);
-        mimeMessageHelper.addAttachment("unnamed.png",new ClassPathResource("unnamed.png"));
+        mimeMessageHelper.addAttachment(template, new ClassPathResource(template));
         mimeMessageHelper.setText(template,true);
         return mimeMailMessage;
     }

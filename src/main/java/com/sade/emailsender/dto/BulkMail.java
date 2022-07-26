@@ -14,5 +14,7 @@ import java.util.List;
 public class BulkMail {
     public String subject;
     public String body;
+
+
     public List<String> to;
 }
