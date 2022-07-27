@@ -10,11 +10,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.thymeleaf.model.IText;
 
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 @SpringBootApplication
@@ -51,12 +55,35 @@ public class EmailSenderApplication {
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
+            String filePath = "src/main/resources/files/" + fileName + "/";
+
             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), fileName);
             try{
                 sender.sendHtmlMail(mimeMessage);
-            }catch (Exception e){
+            }catch (Exception e) {
                 // TODO: to isminde bir dosya oluşturulacak. (mail adresi.txt)
-                sender.sendHtmlMail(mimeMessage);
+                File files = new File(filePath);
+
+                try {
+                    files.createNewFile();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                String yourContent = "Merhaba " + to;
+                FileOutputStream fos;
+                try {
+                    fos = new FileOutputStream(filePath);
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    fos.write(yourContent.getBytes());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                MimeMessage mimeMessage2 = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), filePath);
+                sender.sendHtmlMail(mimeMessage2);
+
             }
         });
 
