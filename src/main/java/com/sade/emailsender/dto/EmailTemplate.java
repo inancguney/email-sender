@@ -14,6 +14,7 @@ public class EmailTemplate {
     public String to;
     public String subject;
     public String body;
+    public String file;
 
 
 }

@@ -1,8 +1,8 @@
 {
   "subject": "subject",
   "body": "Merhaba %isim%. Bu mesaj otomatik gönderilmiştir.",
-  "template": "unnamed.png",
+  "file": "%isim%.txt",
   "to": [
-    "tamer.kacak@sadeyazilim.com"
+    "guney19@itu.edu.tr"
   ]
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
+import org.thymeleaf.model.IText;
 
 import javax.mail.internet.MimeMessage;
 
@@ -48,8 +49,9 @@ public class EmailSenderApplication {
         * */
 
         bulkMail.to.forEach(to -> {
-            EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
-             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%",to),"unnamed.png");
+            bulkMail.file =  bulkMail.getTo() + ".txt";
+            EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body, bulkMail.file);
+             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%",to), bulkMail.file);
             sender.sendHtmlMail(mimeMessage);
         });
         /*
