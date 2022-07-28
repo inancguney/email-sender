@@ -76,42 +76,6 @@ public class Sender {
 
 
 
-//    @SneakyThrows
-   /* public MimeMessage setMimeMailMessage(EmailTemplate emailTemplate,String template){
-        MimeMessage mimeMailMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage,true,"UTF-8");
-        mimeMessageHelper.setFrom(emailFrom);
-        mimeMessageHelper.setTo(emailTemplate.to);
-        mimeMessageHelper.addAttachment("main/resources/files");
-        mimeMessageHelper.setSubject(emailTemplate.subject);
-        mimeMessageHelper.setText(template,true);
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMailMessage, true);
-
-        helper.setFrom(mimeMailMessage.getFrom());
-        helper.setTo(mimeMailMessage.getTo());
-        helper.setSubject(mimeMailMessage.getSubject());
-        helper.setText(String.format(
-                mimeMailMessage.getText(), dear, content));
-
-        FileSystemResource file = new FileSystemResource("C:\\log.txt");
-        helper.addAttachment(file.getFilename(), file);
-
-    }catch (MessagingException e) {
-        throw new MailParseException(e);
-    } catch (MessagingException e) {
-        throw new RuntimeException(e);
-    }
-        mailSender.send(message);
-}
-        return mimeMailMessage;
-    }
-    /*MimeMessage.body = new MimeBodyPart();
-    String filename = "/main/resources/files/unnamed.png";
-    DataSource source = new FileDataSource(filename);
-         MimeMessage.body.setDataHandler(new DataHandler(source));
-         MimeMessage.body.setFileName(filename);
-*/
-
 
 
     public void sendHtmlMail(MimeMessage mimeMessage){
