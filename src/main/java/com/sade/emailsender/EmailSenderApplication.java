@@ -55,36 +55,16 @@ public class EmailSenderApplication {
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
-            String filePath = "src/main/resources/files/" + fileName + "/";
-
-            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), fileName);
-            try{
-                sender.sendHtmlMail(mimeMessage);
-            }catch (Exception e) {
-                // TODO: to isminde bir dosya oluşturulacak. (mail adresi.txt)
-                File files = new File(filePath);
-
+            File file = new File("src/main/resources/files/" + fileName);
+            if (!file.exists()) {
                 try {
-                    files.createNewFile();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    file.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                String yourContent = "Merhaba " + to;
-                FileOutputStream fos;
-                try {
-                    fos = new FileOutputStream(filePath);
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                try {
-                    fos.write(yourContent.getBytes());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                MimeMessage mimeMessage2 = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), filePath);
-                sender.sendHtmlMail(mimeMessage2);
-
             }
+            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), fileName, file);
+            sender.sendHtmlMail(mimeMessage);
         });
 
     }
