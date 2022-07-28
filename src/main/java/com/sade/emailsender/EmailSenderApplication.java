@@ -55,16 +55,29 @@ public class EmailSenderApplication {
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
+            String yourContent = "Merhaba " + to + " bu mesaj otomatik oluşturulmuştur";
             File file = new File("src/main/resources/files/" + fileName);
-            if (!file.exists()) {
                 try {
                     file.createNewFile();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                byte b[]=yourContent.getBytes();
+                fileOutputStream.write(b);
+                fileOutputStream.close();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+
+
             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), fileName, file);
             sender.sendHtmlMail(mimeMessage);
+
         });
 
     }
