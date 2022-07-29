@@ -23,7 +23,7 @@ public class FileReader {
         }
     }
 
-    //TODO: readFileFrom_mailotosend
+    //TODO: yeni method
 
     /**
      * This method converts string data to email templates as list.

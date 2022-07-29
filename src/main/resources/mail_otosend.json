@@ -3,8 +3,6 @@
   "body": "Merhaba %isim%. Bu mesaj otomatik gönderilmiştir.",
   "file": "%isim%.txt",
   "to": [
-    "guney19@itu.edu.tr",
-    "hinancguney@gmail.com",
     "tamer.kacak@sadeyazilim.com"
   ]
 }

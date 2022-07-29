@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -43,35 +44,29 @@ public class EmailSenderApplication {
         String template = fileReader.readFile("template.html");
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
-        /*
-         * to = gönderdiğin mail
-         * fileName'e gönderdiğin maili yazman gerekiyor
-         * Not= Sonunda txt var.
-         *
-         *
-         *
-         * */
 
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
+            // TODO: content'i mail_otosend.json'ın içindeki body ile değiştir.
             String yourContent = "Merhaba " + to + " bu mesaj otomatik oluşturulmuştur";
             File file = new File("src/main/resources/files/" + fileName);
+            if (!file.exists()) {
                 try {
                     file.createNewFile();
+                    // TODO: Dosyaya yazma kısmını FileReader classına taşıyıp oradan bu methodu çağır
+                    try {
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(yourContent);
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    // ----------------------------------
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                byte b[]=yourContent.getBytes();
-                fileOutputStream.write(b);
-                fileOutputStream.close();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
 
 
