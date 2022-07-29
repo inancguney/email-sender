@@ -35,6 +35,20 @@ public class FileReader {
     }
 
 
+    public File newFile(FileReader fileReader, String fileName, String yourContent){
+        File file = new File("src/main/resources/files/" + fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                fileReader.addToFile(file, yourContent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return file;
+    }
+
+
     /**
      * This method converts string data to email templates as list.
      *

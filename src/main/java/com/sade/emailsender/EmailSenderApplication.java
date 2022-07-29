@@ -10,16 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
-import org.thymeleaf.model.IText;
-
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 
 @SpringBootApplication
@@ -49,18 +42,7 @@ public class EmailSenderApplication {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
             String yourContent = bulkMail.getBody().replace("%isim%", to);
-            File file = new File("src/main/resources/files/" + fileName);
-            if (!file.exists()) {
-                try {
-                    file.createNewFile();
-                    fileReader.addToFile(file, yourContent);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-
-
+            File file = fileReader.newFile(fileReader, fileName, yourContent);
             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), fileName, file);
             sender.sendHtmlMail(mimeMessage);
 
