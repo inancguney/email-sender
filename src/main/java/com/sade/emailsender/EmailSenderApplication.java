@@ -49,19 +49,13 @@ public class EmailSenderApplication {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
             // TODO: content'i mail_otosend.json'ın içindeki body ile değiştir.
-            String yourContent = "Merhaba " + to + " bu mesaj otomatik oluşturulmuştur";
+            String yourContent = emailTemplate.body.replace("%isim%", to);
             File file = new File("src/main/resources/files/" + fileName);
             if (!file.exists()) {
                 try {
                     file.createNewFile();
                     // TODO: Dosyaya yazma kısmını FileReader classına taşıyıp oradan bu methodu çağır
-                    try {
-                        FileWriter fileWriter = new FileWriter(file);
-                        fileWriter.write(yourContent);
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                   fileReader.addToFile(file,yourContent);
                     // ----------------------------------
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -6,7 +6,10 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Service
 @Component
@@ -24,6 +27,13 @@ public class FileReader {
     }
 
     //TODO: yeni method
+    public void addToFile(File file, String yourContent) throws IOException {
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(yourContent);
+                        fileWriter.close();
+
+    }
+
 
     /**
      * This method converts string data to email templates as list.
