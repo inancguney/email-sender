@@ -48,15 +48,12 @@ public class EmailSenderApplication {
         bulkMail.to.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
             String fileName = to + ".txt";
-            // TODO: content'i mail_otosend.json'ın içindeki body ile değiştir.
-            String yourContent = emailTemplate.body.replace("%isim%", to);
+            String yourContent = bulkMail.getBody().replace("%isim%", to);
             File file = new File("src/main/resources/files/" + fileName);
             if (!file.exists()) {
                 try {
                     file.createNewFile();
-                    // TODO: Dosyaya yazma kısmını FileReader classına taşıyıp oradan bu methodu çağır
-                   fileReader.addToFile(file,yourContent);
-                    // ----------------------------------
+                    fileReader.addToFile(file, yourContent);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

@@ -33,35 +33,7 @@ public class Sender {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
-//    public MimeMessage setSimpleMailMessage(EmailTemplate bulkMail) {
-//
-//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-//
-//        simpleMailMessage.setFrom(emailFrom);
-//        simpleMailMessage.setTo(String.valueOf(bulkMail.to));
-//        simpleMailMessage.setText(bulkMail.body);
-//        simpleMailMessage.setSubject(bulkMail.subject);
-//
-//
-//        MimeMessage message = mailSender.createMimeMessage();
-//
-//        try{
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//
-//            helper.setFrom(simpleMailMessage.getFrom());
-//            helper.setTo(simpleMailMessage.getTo());
-//            helper.setSubject(simpleMailMessage.getSubject());
-//            helper.setText(String.format(
-//                    simpleMailMessage.getText()));
-//
-//            FileSystemResource file = new FileSystemResource("C:\\unnamed.png");
-//            helper.addAttachment(file.getFilename(), file);
-//
-//        }catch (MessagingException e) {
-//            throw new MailParseException(e);
-//        }
-//        return message;
-//    }
+
     @SneakyThrows
     public MimeMessage setSimpleMailMessage(EmailTemplate emailTemplate,String template, String fileName,File file){
         MimeMessage mimeMailMessage = mailSender.createMimeMessage();
