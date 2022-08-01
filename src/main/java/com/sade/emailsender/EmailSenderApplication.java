@@ -21,6 +21,7 @@ public class EmailSenderApplication {
     private Sender sender;
     @Autowired
     private FileReader fileReader;
+    private CharSequence money;
 
     public static void main(String[] args) {
 
@@ -39,12 +40,16 @@ public class EmailSenderApplication {
 
 
         bulkMail.to.forEach(to -> {
-            EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
-            String fileName = to + ".txt";
-            String yourContent = bulkMail.getBody().replace("%isim%", to);
-            File file = fileReader.newFile(fileReader, fileName, yourContent);
-            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to), fileName, file);
-            sender.sendHtmlMail(mimeMessage);
+                String money[] = {"5000", "7000"};
+                int i = 0;
+                EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
+                String fileName = to + ".txt";
+                String yourContent = bulkMail.getBody().replace("%isim%", to).replace("%maaş%", money[i]);
+                File file = fileReader.newFile(fileReader, fileName, yourContent);
+                i = i+1;
+                MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to).replace("%maaş%", money[i]), fileName, file);
+                sender.sendHtmlMail(mimeMessage);
+
 
         });
 
