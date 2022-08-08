@@ -37,14 +37,17 @@ public class EmailSenderApplication {
         String data = fileReader.readFile("mail_otosend.json");
         String template = fileReader.readFile("template.html");
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
-        //List<CustomerInfo> tol =  bulkMail.getToList();
 
-            EmailTemplate emailTemplate = new EmailTemplate(CustomerInfo.mail, bulkMail.subject, bulkMail.body);
-            String fileName = CustomerInfo.mail + ".txt";
-            String yourContent = bulkMail.getBody().replace("%isim%", CustomerInfo.mail).replace("%salary%", CustomerInfo.salary);
+        bulkMail.customerInfos.forEach(to -> {
+            EmailTemplate emailTemplate = new EmailTemplate(to.mail, bulkMail.subject, bulkMail.body);
+            String fileName = to.mail + ".txt";
+            String yourContent = bulkMail.getBody().replace("%isim%", to.mail).replace("%salary%", to.salary);
             File file = fileReader.newFile(fileReader, fileName, yourContent);
-            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", CustomerInfo.mail).replace("%maaş%", CustomerInfo.salary), fileName, file);
+            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, file);
             sender.sendHtmlMail(mimeMessage);
+
+
+        });
 
 
 

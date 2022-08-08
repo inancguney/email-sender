@@ -18,7 +18,7 @@ public class BulkMail {
 
     public String file;
 
-    public List<CustomerInfo> toList;
+    public List<CustomerInfo> customerInfos;
 }
 
 

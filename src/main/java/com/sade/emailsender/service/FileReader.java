@@ -52,7 +52,7 @@ public class FileReader {
     /**
      * This method converts string data to email templates as list.
      *
-     * @param data it is data from mail_detail.json which is string.
+     * @param data it is data from mail_otosend.json which is string.
      * @return it is converted email templates as list.
      */
     /*public List<EmailTemplate> stringToEmailTemplates(String data) {

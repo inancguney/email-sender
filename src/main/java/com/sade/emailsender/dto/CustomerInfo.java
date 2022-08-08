@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class CustomerInfo {
-    public static String mail;
-    public static String salary;
+    public String mail;
+    public String salary;
 }

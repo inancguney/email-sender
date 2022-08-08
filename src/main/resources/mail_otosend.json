@@ -2,10 +2,14 @@
   "subject": "subject",
   "body": "Merhaba %isim%. Bu ayki maaşınız: %salary%",
   "file": "%isim%.txt",
-  "to": [
+  "customerInfos": [
     {
       "mail": "tamer.kacak@sadeyazilim.com",
       "salary": 4500
+    },
+    {
+      "mail": "hinancguney@gmail.com",
+      "salary": 8000
     }
   ]
 }
