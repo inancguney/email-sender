@@ -2,7 +2,6 @@ package com.sade.emailsender.service;
 
 import com.google.gson.Gson;
 import com.sade.emailsender.dto.BulkMail;
-import com.sade.emailsender.dto.Root;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -66,12 +65,6 @@ public class FileReader {
         BulkMail bulkMails = new Gson().fromJson(data, BulkMail.class);
         return bulkMails;
     }
-
-    public Root stringToRoot(String data) {
-        Root root = new Gson().fromJson(data, Root.class);
-        return root;
-    }
-
 
     // TODO: stringToBulkMail
 

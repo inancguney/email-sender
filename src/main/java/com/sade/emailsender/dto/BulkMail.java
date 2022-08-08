@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,6 +15,10 @@ import java.util.List;
 public class BulkMail {
     public String subject;
     public String body;
-    public List<String> to;
-    public String salary;
+
+    public String file;
+
+    public List<CustomerInfo> toList;
 }
+
+

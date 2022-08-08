@@ -1,8 +1,11 @@
 {
   "subject": "subject",
-  "body": "Merhaba %isim%. Bu mesaj otomatik gönderilmiştir.",
+  "body": "Merhaba %isim%. Bu ayki maaşınız: %salary%",
   "file": "%isim%.txt",
   "to": [
-    "tamer.kacak@sadeyazilim.com"
+    {
+      "mail": "tamer.kacak@sadeyazilim.com",
+      "salary": 4500
+    }
   ]
 }

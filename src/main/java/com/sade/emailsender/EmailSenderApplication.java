@@ -3,7 +3,6 @@ package com.sade.emailsender;
 
 import com.sade.emailsender.dto.BulkMail;
 import com.sade.emailsender.dto.EmailTemplate;
-import com.sade.emailsender.dto.Root;
 import com.sade.emailsender.service.FileReader;
 import com.sade.emailsender.service.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-
 
 
 @SpringBootApplication
@@ -39,13 +37,13 @@ public class EmailSenderApplication {
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
 
-        bulkMail.to.forEach(to -> {
-                EmailTemplate emailTemplate = new EmailTemplate(to, bulkMail.subject, bulkMail.body);
-                String fileName = to + ".txt";
-                String yourContent = bulkMail.getBody().replace("%isim%", to).replace("%maaş%", bulkMail.salary);
-                File file = fileReader.newFile(fileReader, fileName, yourContent);
-                MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to).replace("%maaş%", bulkMail.salary), fileName, file);
-                sender.sendHtmlMail(mimeMessage);
+        bulkMail.getToList().forEach(to -> {
+            EmailTemplate emailTemplate = new EmailTemplate(to.mail, bulkMail.subject, bulkMail.body);
+            String fileName = to + ".txt";
+            String yourContent = bulkMail.getBody().replace("%isim%", to.mail).replace("%salary%", to.salary);
+            File file = fileReader.newFile(fileReader, fileName, yourContent);
+            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, file);
+            sender.sendHtmlMail(mimeMessage);
 
 
         });
