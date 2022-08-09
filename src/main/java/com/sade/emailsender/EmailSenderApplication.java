@@ -40,17 +40,12 @@ public class EmailSenderApplication {
 
         bulkMail.customerInfos.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to.mail, bulkMail.subject, bulkMail.body);
-            String fileName = to.mail + ".txt";
+            String fileName = to.mail + ".pdf";
             String yourContent = bulkMail.getBody().replace("%isim%", to.mail).replace("%salary%", to.salary);
-            File file = fileReader.newFile(fileReader, fileName, yourContent);
-            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, file);
+            File pdfFile = fileReader.newPdf(fileReader,fileName, yourContent);
+            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, pdfFile);
             sender.sendHtmlMail(mimeMessage);
-
-
         });
-
-
-
 
     }
 }
