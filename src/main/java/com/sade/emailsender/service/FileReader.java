@@ -65,13 +65,14 @@ public class FileReader {
     }
 
 
-    public File newPdf(FileReader fileReader, String fileName, String yourContent) {
+    public File newPdf(FileReader fileReader, String fileName) {
         File file = new File("src/main/resources/files/" + fileName);
         if (!file.exists()) {
             try {
-                Document document = new Document(PageSize.A4, 0f, 0f, 0f, 0f);
-                PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/files/" + fileName));
-                document.open();
+                PDDocument document = new PDDocument();
+                //PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/files/" + fileName));
+                document.save(new FileOutputStream("src/main/resources/files/" + fileName));
+                document.addPage(new PDPage());
                 /*PDDocument doc = PDDocument.load(file);
                 PDPage page = doc.getPage(0);
                 PDImageXObject pdfimg =
@@ -84,9 +85,10 @@ public class FileReader {
                 float fntSize, lineSpacing;
                 fntSize = 10f;
                 lineSpacing = 10f;
-                document.add(new Paragraph(new Phrase(lineSpacing,yourContent,
-                        FontFactory.getFont(FontFactory.TIMES_ROMAN, fntSize,BaseColor.BLUE) )));
+                /*document.add(new Paragraph(new Phrase(lineSpacing,yourContent,
+                        FontFactory.getFont(FontFactory.TIMES_ROMAN, fntSize,BaseColor.BLUE) )));*/
                 document.close();
+
                 file = new File("src/main/resources/files/" + fileName);
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -94,7 +96,6 @@ public class FileReader {
         }
         return file;
     }
-
 
     /**
      * This method converts string data to email templates as list.
