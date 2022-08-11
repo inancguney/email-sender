@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.apache.pdfbox:pdfbox:2.0.4'
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 	implementation('org.thymeleaf:thymeleaf:3.0.12.RELEASE')
+	implementation 'org.apache.pdfbox:pdfbox:2.0.26'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

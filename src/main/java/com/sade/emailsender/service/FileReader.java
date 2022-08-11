@@ -1,13 +1,18 @@
 package com.sade.emailsender.service;
 
 import com.google.gson.Gson;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sade.emailsender.dto.BulkMail;
 import org.apache.commons.io.IOUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+
+
 
 @Service
 @Component
@@ -62,11 +69,23 @@ public class FileReader {
         File file = new File("src/main/resources/files/" + fileName);
         if (!file.exists()) {
             try {
-                Document document = new Document();
+                Document document = new Document(PageSize.A4, 0f, 0f, 0f, 0f);
                 PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/files/" + fileName));
-
                 document.open();
-                document.add(new Paragraph(yourContent));
+                /*PDDocument doc = PDDocument.load(file);
+                PDPage page = doc.getPage(0);
+                PDImageXObject pdfimg =
+                        PDImageXObject.createFromFile("src/main/resources/files/Ekran Resmi 2022-08-10 22.57.17.png", doc);
+
+                PDPageContentStream image
+                        = new PDPageContentStream(doc, page);
+
+                image.drawImage(pdfimg, 55, 370);*/
+                float fntSize, lineSpacing;
+                fntSize = 10f;
+                lineSpacing = 10f;
+                document.add(new Paragraph(new Phrase(lineSpacing,yourContent,
+                        FontFactory.getFont(FontFactory.TIMES_ROMAN, fntSize,BaseColor.BLUE) )));
                 document.close();
                 file = new File("src/main/resources/files/" + fileName);
             } catch (Exception e) {
