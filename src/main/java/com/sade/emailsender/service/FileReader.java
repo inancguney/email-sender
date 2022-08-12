@@ -1,7 +1,10 @@
 package com.sade.emailsender.service;
 
 import com.google.gson.Gson;
+import com.itextpdf.commons.actions.contexts.IMetaInfo;
+import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.attach.impl.layout.Html2PdfProperty;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sade.emailsender.dto.BulkMail;
@@ -13,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 
 @Service
@@ -72,14 +76,19 @@ public class FileReader {
     }
 
 
-    public static void htmlToPdf() {
+    public File htmlToPdf(String fileName, String htmlContent) {
+        File file = new File("src/main/resources/files/" + fileName);
         try {
-            HtmlConverter.convertToPdf(new FileInputStream("src/main/resources/files/index.html"),
-                    new FileOutputStream("src/main/resources/files/index-to-pdf.pdf"));
+            if (!file.exists()) {
+                HtmlConverter.convertToPdf(htmlContent,
+                        new FileOutputStream("src/main/resources/files/" + fileName));
+                file = new File("src/main/resources/files/" + fileName);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return file;
     }
 
     /**

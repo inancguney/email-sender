@@ -14,5 +14,5 @@ public class CustomerInfo {
     public String salary;
 
     public String raise;
-    public String ad;
+    public String name;
 }

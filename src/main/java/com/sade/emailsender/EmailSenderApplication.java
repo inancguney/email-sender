@@ -22,31 +22,28 @@ public class EmailSenderApplication {
     private FileReader fileReader;
 
     public static void main(String[] args) {
-        FileReader.htmlToPdf();
         SpringApplication.run(EmailSenderApplication.class, args);
     }
 
     /**
      * forEach turns every email template in emailTemplates list. And it sends every email message step by step.
      */
-//    @EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void sendmail() {
 
         String data = fileReader.readFile("mail_otosend.json");
         String template = fileReader.readFile("template.html");
-        String ektemplate = fileReader.readFile("index.html");
+        String ektemplate = fileReader.readFile("files/index.html");
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
         bulkMail.customerInfos.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to.mail, bulkMail.subject, bulkMail.body);
             String fileName = to.mail + ".pdf";
-            String yourContent = bulkMail.getBody().replace("%isim%", to.mail).replace("%salary%", to.salary);
-            ektemplate.replace("%ad%", to.ad).replace("%oran%", to.raise).replace("%maaş%", to.salary);
-            File pdfFile = fileReader.newPdf(fileReader,fileName, yourContent);
+            String replacedEktemplate = String.format(ektemplate, to.name, to.raise, to.salary);
+            File pdfFile = fileReader.htmlToPdf(fileName, replacedEktemplate);
             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, pdfFile);
             sender.sendHtmlMail(mimeMessage);
         });
-
     }
 }
 
