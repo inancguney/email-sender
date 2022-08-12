@@ -1,30 +1,18 @@
 package com.sade.emailsender.service;
 
 import com.google.gson.Gson;
+import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.text.*;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sade.emailsender.dto.BulkMail;
 import org.apache.commons.io.IOUtils;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.awt.*;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-
 
 
 @Service
@@ -65,36 +53,33 @@ public class FileReader {
     }
 
 
-    public File newPdf(FileReader fileReader, String fileName) {
+    public File newPdf(FileReader fileReader, String fileName, String yourContent) {
         File file = new File("src/main/resources/files/" + fileName);
         if (!file.exists()) {
             try {
-                PDDocument document = new PDDocument();
-                //PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/files/" + fileName));
-                document.save(new FileOutputStream("src/main/resources/files/" + fileName));
-                document.addPage(new PDPage());
-                /*PDDocument doc = PDDocument.load(file);
-                PDPage page = doc.getPage(0);
-                PDImageXObject pdfimg =
-                        PDImageXObject.createFromFile("src/main/resources/files/Ekran Resmi 2022-08-10 22.57.17.png", doc);
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/files/" + fileName));
 
-                PDPageContentStream image
-                        = new PDPageContentStream(doc, page);
-
-                image.drawImage(pdfimg, 55, 370);*/
-                float fntSize, lineSpacing;
-                fntSize = 10f;
-                lineSpacing = 10f;
-                /*document.add(new Paragraph(new Phrase(lineSpacing,yourContent,
-                        FontFactory.getFont(FontFactory.TIMES_ROMAN, fntSize,BaseColor.BLUE) )));*/
+                document.open();
+                document.add(new Paragraph(yourContent));
                 document.close();
-
                 file = new File("src/main/resources/files/" + fileName);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
         return file;
+    }
+
+
+    public static void htmlToPdf() {
+        try {
+            HtmlConverter.convertToPdf(new FileInputStream("src/main/resources/files/index.html"),
+                    new FileOutputStream("src/main/resources/files/index-to-pdf.pdf"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
