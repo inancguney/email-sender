@@ -34,12 +34,14 @@ public class EmailSenderApplication {
 
         String data = fileReader.readFile("mail_otosend.json");
         String template = fileReader.readFile("template.html");
+        String ektemplate = fileReader.readFile("index.html");
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
         bulkMail.customerInfos.forEach(to -> {
             EmailTemplate emailTemplate = new EmailTemplate(to.mail, bulkMail.subject, bulkMail.body);
             String fileName = to.mail + ".pdf";
             String yourContent = bulkMail.getBody().replace("%isim%", to.mail).replace("%salary%", to.salary);
+            ektemplate.replace("%ad%", to.ad).replace("%oran%", to.raise).replace("%maaş%", to.salary);
             File pdfFile = fileReader.newPdf(fileReader,fileName, yourContent);
             MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, pdfFile);
             sender.sendHtmlMail(mimeMessage);

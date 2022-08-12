@@ -12,4 +12,7 @@ import lombok.Setter;
 public class CustomerInfo {
     public String mail;
     public String salary;
+
+    public String raise;
+    public String ad;
 }

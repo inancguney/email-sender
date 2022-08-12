@@ -4,8 +4,10 @@
   "file": "%isim%.txt",
   "customerInfos": [
     {
-      "mail": "tamer.kacak@sadeyazilim.com",
-      "salary": 4500
+      "mail": "hinancguney@gmail.com",
+      "salary": 8000,
+      "name": "İnanç",
+      "raise": "%40"
     }
   ]
 }
