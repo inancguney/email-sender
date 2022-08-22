@@ -13,11 +13,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
@@ -35,22 +30,13 @@ public class Sender {
 
 
     @SneakyThrows
-    public MimeMessage setSimpleMailMessage(EmailTemplate emailTemplate,String template, String fileName,File file){
+    public MimeMessage setSimpleMailMessage(EmailTemplate emailTemplate, String htmlTemplate, String fileName, File file) {
         MimeMessage mimeMailMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage,true,"UTF-8");
-        mimeMessageHelper.setFrom(emailFrom);
-        mimeMessageHelper.setTo(emailTemplate.to);
-        mimeMessageHelper.setSubject(emailTemplate.subject);
-        mimeMessageHelper.addAttachment(fileName, file);
-        mimeMessageHelper.setText(template,true);
         return mimeMailMessage;
     }
 
 
-
-
-
-    public void sendHtmlMail(MimeMessage mimeMessage){
+    public void sendHtmlMail(MimeMessage mimeMessage) {
         mailSender.send(mimeMessage);
         System.out.println("Mail sent succesfuly...");
     }

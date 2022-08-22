@@ -32,7 +32,7 @@ public class EmailSenderApplication {
     public void sendmail() {
 
         String data = fileReader.readFile("mail_otosend.json");
-        String template = fileReader.readFile("template.html");
+        String htmlTemplate = fileReader.readFile("template.html");
         String ektemplate = fileReader.readFile("files/index.html");
         BulkMail bulkMail = fileReader.stringToBulkMail(data);
 
@@ -41,7 +41,8 @@ public class EmailSenderApplication {
             String fileName = to.mail + ".pdf";
             String replacedEktemplate = String.format(ektemplate, to.name, to.raise, to.salary);
             File pdfFile = fileReader.htmlToPdf(fileName, replacedEktemplate);
-            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, template.replace("%isim%", to.mail).replace("%maaş%", to.salary), fileName, pdfFile);
+            String replacedHtmlTemplate = htmlTemplate.replace("%isim%", to.mail).replace("%maaş%", to.salary);
+            MimeMessage mimeMessage = sender.setSimpleMailMessage(emailTemplate, replacedHtmlTemplate, fileName, pdfFile);
             sender.sendHtmlMail(mimeMessage);
         });
     }
